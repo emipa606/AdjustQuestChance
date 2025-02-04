@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <AQC.ModVersion>Installed mod-version: {0}</AQC.ModVersion>
+  <AQC.Reload>Warning: Reload of game save is required for the changes to apply (but no game restart required)</AQC.Reload>
+  <AQC.Debug>Debug output? Don't use unless necessary</AQC.Debug>
+  <AQC.ItemInfo>{0} quest selection weight: {1}</AQC.ItemInfo>
+  <AQC.Reset>Reset Settings</AQC.Reset>
+</LanguageData>
