@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using HarmonyLib;
 using Mlie;
 using RimWorld;
@@ -10,17 +11,17 @@ namespace AdjustQuestChance;
 
 internal class AdjustQuestChance : Mod
 {
-    public static Dictionary<string, float> questMap;
+    public static Dictionary<string, float> QuestMap;
 
-    public static Settings LatestVersion;
+    private static Settings latestVersion;
 
     public AdjustQuestChance(ModContentPack mcp)
         : base(mcp)
     {
-        new Harmony("GwinnBleidd.AQC").PatchAll();
-        LatestVersion = GetSettings<Settings>() ?? new Settings();
-        LongEventHandler.ExecuteWhenFinished(Init);
-        Settings.currentVersion = VersionFromManifest.GetVersionFromModMetaData(mcp.ModMetaData);
+        new Harmony("GwinnBleidd.AQC").PatchAll(Assembly.GetExecutingAssembly());
+        latestVersion = GetSettings<Settings>() ?? new Settings();
+        LongEventHandler.ExecuteWhenFinished(init);
+        Settings.CurrentVersion = VersionFromManifest.GetVersionFromModMetaData(mcp.ModMetaData);
     }
 
     public override string SettingsCategory()
@@ -30,28 +31,28 @@ internal class AdjustQuestChance : Mod
 
     public override void DoSettingsWindowContents(Rect inRect)
     {
-        LatestVersion.DrawWindow(inRect);
+        latestVersion.DrawWindow(inRect);
     }
 
-    private static void Init()
+    private static void init()
     {
-        CompileQuestList();
+        compileQuestList();
     }
 
-    public static void CompileQuestList()
+    private static void compileQuestList()
     {
-        questMap = new Dictionary<string, float>();
+        QuestMap = new Dictionary<string, float>();
         foreach (var item in DefDatabase<QuestScriptDef>.AllDefsListForReading.Where(q => q.IsRootRandomSelected))
         {
-            questMap.Add(item.defName, item.rootSelectionWeight);
+            QuestMap.Add(item.defName, item.rootSelectionWeight);
         }
     }
 
-    public static void applyChances()
+    public static void ApplyChances()
     {
         foreach (var item in DefDatabase<QuestScriptDef>.AllDefsListForReading.Where(q => q.IsRootRandomSelected))
         {
-            if (!LatestVersion.questChances.TryGetValue(item.defName, out var value))
+            if (!latestVersion.QuestChances.TryGetValue(item.defName, out var value))
             {
                 continue;
             }
@@ -63,7 +64,7 @@ internal class AdjustQuestChance : Mod
 
     public static void Debug(string title)
     {
-        if (LatestVersion.DebugMode)
+        if (latestVersion.DebugMode)
         {
             Log.Message($"AQC: {title}");
         }

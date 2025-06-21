@@ -9,6 +9,6 @@ internal static class Game_InitNewGame
     public static void Postfix()
     {
         AdjustQuestChance.Debug("Game_InitNewGame Patch");
-        AdjustQuestChance.applyChances();
+        AdjustQuestChance.ApplyChances();
     }
 }

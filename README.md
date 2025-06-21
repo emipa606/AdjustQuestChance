@@ -1,4 +1,4 @@
-# [Adjust Quest Chance (Continued)]()
+# [Adjust Quest Chance (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=3420908233)
 
 ![Image](https://i.imgur.com/buuPQel.png)
 
@@ -31,4 +31,6 @@ Notice: Reload of game save is required for the changes to apply (but no game re
 -  If you have the solution for a problem, please post it to the GitHub repository.
 -  Use [RimSort](https://github.com/RimSort/RimSort/releases/latest) to sort your mods
 
+ 
 
+[![Image](https://img.shields.io/github/v/release/emipa606/AdjustQuestChance?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/3420908233) | tags:  weight adjustment
