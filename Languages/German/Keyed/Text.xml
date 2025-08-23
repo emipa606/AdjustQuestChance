@@ -6,4 +6,5 @@
   <AQC.Debug>Debug-Ausgabe? Nicht verwenden, wenn nicht notwendig</AQC.Debug>
   <AQC.ItemInfo>{0} Gewichtung der Suche: {1}</AQC.ItemInfo>
   <AQC.Reset>Einstellungen zurücksetzen</AQC.Reset>
+  <AQC.Search>Suche</AQC.Search>
 </LanguageData>

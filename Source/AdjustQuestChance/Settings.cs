@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 
@@ -15,6 +16,7 @@ internal class Settings : ModSettings
     public bool DebugMode = debugMode;
 
     public Dictionary<string, float> QuestChances = new();
+    private string searchText = string.Empty;
 
     public override void ExposeData()
     {
@@ -56,16 +58,28 @@ internal class Settings : ModSettings
         }
 
         listingStandard.GapLine();
-        foreach (var item in AdjustQuestChance.QuestMap)
+        searchText = listingStandard.TextEntryLabeled("AQC.Search".Translate(), searchText);
+
+        IEnumerable<KeyValuePair<string, float>> items = AdjustQuestChance.QuestMap;
+        if (!string.IsNullOrWhiteSpace(searchText))
         {
-            if (!QuestChances.TryGetValue(item.Key, out var value))
+            var term = searchText.Trim();
+            items = items.Where(pair => pair.Key.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0);
+        }
+
+        if (items?.Any() == true)
+        {
+            foreach (var item in items.OrderBy(pair => pair.Key))
             {
-                value = item.Value;
+                if (!QuestChances.TryGetValue(item.Key, out var value))
+                {
+                    value = item.Value;
+                }
+
+                listingStandard.Label("AQC.ItemInfo".Translate(item.Key, Math.Round(value, 3)));
+
+                QuestChances[item.Key] = listingStandard.Slider(value, 0.1f, 20f);
             }
-
-            listingStandard.Label("AQC.ItemInfo".Translate(item.Key, Math.Round(value, 3)));
-
-            QuestChances[item.Key] = listingStandard.Slider(value, 0.1f, 20f);
         }
 
         listingStandard.GapLine();

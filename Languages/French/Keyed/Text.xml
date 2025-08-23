@@ -6,4 +6,5 @@
   <AQC.Debug>Sortie de débogage ? Ne pas utiliser à moins que cela ne soit nécessaire</AQC.Debug>
   <AQC.ItemInfo>{0} poids de sélection de la quête : {1}</AQC.ItemInfo>
   <AQC.Reset>Réinitialiser les paramètres</AQC.Reset>
+  <AQC.Search>Recherche</AQC.Search>
 </LanguageData>

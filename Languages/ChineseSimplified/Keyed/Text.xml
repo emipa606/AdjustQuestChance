@@ -6,4 +6,5 @@
   <AQC.Debug>调试输出？除非必要，否则不要使用</AQC.Debug>
   <AQC.ItemInfo>{0}任务选择权重： {1}</AQC.ItemInfo>
   <AQC.Reset>重置设置</AQC.Reset>
+  <AQC.Search>搜索</AQC.Search>
 </LanguageData>
