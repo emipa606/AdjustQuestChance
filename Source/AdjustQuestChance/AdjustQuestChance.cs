@@ -11,18 +11,20 @@ namespace AdjustQuestChance;
 
 internal class AdjustQuestChance : Mod
 {
-    public static Dictionary<string, float> QuestMap;
-
-    private static Settings latestVersion;
+    private static Settings modSettings;
 
     public AdjustQuestChance(ModContentPack mcp)
         : base(mcp)
     {
         new Harmony("GwinnBleidd.AQC").PatchAll(Assembly.GetExecutingAssembly());
-        latestVersion = GetSettings<Settings>() ?? new Settings();
         LongEventHandler.ExecuteWhenFinished(init);
         Settings.CurrentVersion = VersionFromManifest.GetVersionFromModMetaData(mcp.ModMetaData);
     }
+
+    private static Settings ModSettings =>
+        modSettings ??= LoadedModManager.GetMod<AdjustQuestChance>()?.GetSettings<Settings>();
+
+    public static Dictionary<string, float> QuestMap { get; private set; }
 
     public override string SettingsCategory()
     {
@@ -31,7 +33,7 @@ internal class AdjustQuestChance : Mod
 
     public override void DoSettingsWindowContents(Rect inRect)
     {
-        latestVersion.DrawWindow(inRect);
+        ModSettings.DrawWindow(inRect);
     }
 
     private static void init()
@@ -52,7 +54,7 @@ internal class AdjustQuestChance : Mod
     {
         foreach (var item in DefDatabase<QuestScriptDef>.AllDefsListForReading.Where(q => q.IsRootRandomSelected))
         {
-            if (!latestVersion.QuestChances.TryGetValue(item.defName, out var value))
+            if (!ModSettings.QuestChances.TryGetValue(item.defName, out var value))
             {
                 continue;
             }
@@ -64,7 +66,7 @@ internal class AdjustQuestChance : Mod
 
     public static void Debug(string title)
     {
-        if (latestVersion.DebugMode)
+        if (ModSettings.DebugMode)
         {
             Log.Message($"AQC: {title}");
         }

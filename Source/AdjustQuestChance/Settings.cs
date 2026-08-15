@@ -11,12 +11,12 @@ internal class Settings : ModSettings
     private const bool debugMode = false;
     private static Vector2 scrollPosition = Vector2.zero;
 
-    public static string CurrentVersion;
-
     public bool DebugMode = debugMode;
 
     public Dictionary<string, float> QuestChances = new();
     private string searchText = string.Empty;
+
+    public static string CurrentVersion { get; set; }
 
     public override void ExposeData()
     {
@@ -78,7 +78,7 @@ internal class Settings : ModSettings
 
                 listingStandard.Label("AQC.ItemInfo".Translate(item.Key, Math.Round(value, 3)));
 
-                QuestChances[item.Key] = listingStandard.Slider(value, 0.1f, 20f);
+                QuestChances[item.Key] = listingStandard.Slider(value, 0f, 20f);
             }
         }
 
